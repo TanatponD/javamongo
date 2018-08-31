@@ -41,7 +41,7 @@ public class Mongolabjava {
                 .append("weeksAtOne", 16)
         );
 
-        MongoClientURI uri = new MongoClientURI("mongodb://<dbuser>:<dbpassword>@ds133762.mlab.com:33762/javamongo");
+        MongoClientURI uri = new MongoClientURI("mongodb://<dbuser>:<dbpassword>@<path>");
         MongoClient client = new MongoClient(uri);
         MongoDatabase db = client.getDatabase(uri.getDatabase());
 
