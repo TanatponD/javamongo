@@ -21,7 +21,15 @@ import java.util.List;
 
 public class Mongolabjava {
     public static void main(String[] args) {
+
+        MongoClientURI uri = new MongoClientURI("mongodb://<dbuser>:<dbpassword>@ds133762.mlab.com:33762/javamongo");
+        MongoClient client = new MongoClient(uri);
+        MongoDatabase db = client.getDatabase(uri.getDatabase());
+
         List<Document> seedData = new ArrayList<>();
+
+
+
 
         seedData.add(new Document("decade", "1970s")
                 .append("artist", "Debby Boone")
@@ -41,11 +49,11 @@ public class Mongolabjava {
                 .append("weeksAtOne", 16)
         );
 
-        MongoClientURI uri = new MongoClientURI("mongodb://<dbuser>:<dbpassword>@<path>");
-        MongoClient client = new MongoClient(uri);
-        MongoDatabase db = client.getDatabase(uri.getDatabase());
 
         MongoCollection<Document> songs = db.getCollection("songs");
+
+        songs.insertMany(seedData);
+
 
         Document updateQuery = new Document("song", "One Sweet Day");
         songs.updateOne(updateQuery, new Document("$set", new Document("artist", "Mariah Carey ft. Boyz II Men")));
@@ -69,7 +77,6 @@ public class Mongolabjava {
 
         // Since this is an example, we'll clean up after ourselves.
 
-        songs.drop();
 
         // Only close the connection when your app is terminating
 
